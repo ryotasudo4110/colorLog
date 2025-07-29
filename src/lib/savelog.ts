@@ -1,4 +1,6 @@
 export type ColorLog = {
+    date: string;
+    color: string;
     colorHex?: string;
     memo?: string;
 };
@@ -15,19 +17,25 @@ export function getColorLog(date: string): ColorLog | null {
 }
 
 // 保存したログを全件取得
-export function getAllColorLog():{ date: string; color: string }[]{
-    const logs:{date:string; color:string}[] = [];
+export function getAllColorLog(): ColorLog[] {
+    const logs: ColorLog[] = [];
 
-    for(let i = 0; i < localStorage.length; i++){
+    for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (key?.startsWith("color-log-")) {
-            const date = key.replace("color-log-","");
+            const date = key.replace("color-log-", "");
             const value = localStorage.getItem(key);
             if (value) {
                 const parsed = JSON.parse(value);
-                logs.push({date,color:parsed.colorHex});
+                logs.push({
+                    date,
+                    color: parsed.colorHex ?? parsed.color ?? "", // fallback
+                    colorHex: parsed.colorHex,
+                    memo: parsed.memo,
+                });
             }
         }
     }
+
     return logs;
 }
