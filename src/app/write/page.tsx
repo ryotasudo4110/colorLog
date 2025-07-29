@@ -34,13 +34,21 @@ export default function WritePage() {
     // 「記録する」ボタン押下時の処理
     const handleSave = () => {
         if (logDate == TODAY_LABEL) {
-            // 当日の記録の場合
-            saveColorLog(currentDate, { colorHex: color, memo });
-            alert(logDate+"の色を保存しました！");
-        }else{
-            // 過去日付の記録の場合
-            saveColorLog(logDate, { colorHex: color, memo });
-            alert(logDate+"の色を保存しました！");
+            saveColorLog(currentDate, {
+                date: currentDate,
+                color: color,
+                colorHex: color,
+                memo: memo
+            });
+            alert(logDate + "の色を保存しました！");
+        } else {
+            saveColorLog(logDate, {
+                date: logDate,
+                color: color,
+                colorHex: color,
+                memo: memo
+            });
+            alert(logDate + "の色を保存しました！");
         }
         router.push('/calendar');
     };
@@ -70,7 +78,7 @@ export default function WritePage() {
                 onClick={handleSave}
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
             >
-                <a> 記録する </a>
+                記録する
             </button>
             <CancelButton />
         </main>
