@@ -72,7 +72,7 @@ export default function WritePage() {
             >
                 <a> 記録する </a>
             </button>
-            <CancelButton></CancelButton>
+            <CancelButton />
         </main>
     );
 }

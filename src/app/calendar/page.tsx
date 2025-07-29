@@ -14,7 +14,7 @@ export default function Calendar() {
     const router = useRouter();
 
     // ローカルストレージに保存されている日付と色のデータを全件取得
-    const [colorLogs, setColorLogs] = useState([]);
+    const [colorLogs, setColorLogs] = useState<ColorLog[]>([]);
 
     useEffect(() => {
         const logs = getAllColorLog();
@@ -43,7 +43,7 @@ export default function Calendar() {
         if (isLogged) {
             // 記録済の場合
             // 「修正しますか」のポップアップ表示
-            const confirmed = window.confirm(`${clickDate} の記録\nカラーコード: ${log.colorHex}\nメモ: ${log.memo}\n\n修正しますか？`);
+            const confirmed = window.confirm(`${clickDate} の記録\nカラーコード: ${log?.colorHex ?? log?.color ?? "不明"}\nメモ: ${log?.memo ?? "なし"}\n\n修正しますか？`);
             if (confirmed) {
                 // 記録画面への遷移　日付のパラメータを渡す
                 router.push(`/write?date=${clickDate}`);
@@ -74,7 +74,7 @@ export default function Calendar() {
                         const log = getColorLog(clickDate);
                         clickDateHandle(clickDate,log);
                     }}/>
-                    <HomeButton></HomeButton>
+                    <HomeButton />
             </div>
     )
 }
