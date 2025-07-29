@@ -1,5 +1,5 @@
 export type ColorLog = {
-    colorHex: string;
+    colorHex?: string;
     memo?: string;
 };
 
